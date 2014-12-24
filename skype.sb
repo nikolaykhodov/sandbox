@@ -1,0 +1,137 @@
+(version 1)
+
+(deny default)
+
+(allow appleevent-send
+       (appleevent-destination "com.apple.itunes")
+)
+
+(allow device-camera)
+
+(allow file-ioctl
+       (literal "/dev/dtracehelper")
+)
+
+(allow file-issue-extension
+       (regex #"/Users/nikolay/Library/Caches/com.skype.skype")
+)
+
+(allow file-read*
+       (subpath "/Applications/Skype.app")
+       (subpath "/Applications/iTunes.app")
+       (subpath "/Users/nikolay/Library/Application Support/Skype")
+       (subpath "/Users/nikolay/Library/Caches/com.skype.skype")
+       (subpath "/Library/CoreMediaIO/Plug-Ins/DAL")
+       (subpath "/Library/Fonts")
+       (subpath "/Library/Preferences")
+       (subpath "/Users/nikolay/Library/Preferences")
+       (subpath "/Users/nikolay/Library/Address Book Plug-Ins/SkypeABDialer.bundle")
+       (subpath "/Users/nikolay/Library/Address Book Plug-Ins/SkypeABSMS.bundle")
+       (subpath "/Users/nikolay/Library/Saved Application State/com.skype.skype.savedState")
+       (subpath "/System")
+       (subpath "/usr/lib")
+       (subpath "/usr/share")
+
+       (regex #"^/private/var/folders/[^/]+/[^/]+/C/mds/mds\.lock$")
+       (regex #"^/private/var/folders/[^/]+/[^/]+/T/Skype/DbTemp\.$")
+       (regex #"^/private/var/folders/[^/]+/[^/]+/T/Skype/")
+
+       (literal "/Library/Application Support/CrashReporter/SubmitDiagInfo.domains")
+       (literal "/Library/Audio/Plug-Ins/Components")
+       (literal "/Library/Audio/Plug-Ins/HAL")
+       (literal "/Library/Keychains/System.keychain")
+       (literal "/Library/Preferences/SystemConfiguration/preferences.plist")
+       (literal "/Library/Preferences/com.apple.security.plist")
+       (literal "/Library/Spelling")
+       (literal "/Users/nikolay/Library/Audio/Plug-Ins/Components")
+       (literal "/Users/nikolay/Library/Input Methods")
+       (literal "/Users/nikolay/Library/Keyboard Layouts")
+       (literal "/Users/nikolay/Library/Keychains/login.keychain")
+       (literal "/Users/nikolay/Library/Preferences/com.apple.LaunchServices.plist")
+       (literal "/Users/nikolay/Library/Preferences/com.apple.LaunchServices/com.apple.launchservices.secure.plist")
+       (literal "/Users/nikolay/Library/Sounds")
+       (literal "/Users/nikolay/Library/Spelling")
+       (literal "/Users/nikolay/Library/WebKit/LocalStorage")
+       (literal "/dev/dtracehelper")
+       (literal "/dev/random")
+       (literal "/dev/urandom")
+       (literal "/private/var/db/mds/messages/se_SecurityMessages")
+       (literal "/private/var/db/mds/system/mdsDirectory.db")
+       (literal "/private/var/db/mds/system/mdsObject.db")
+)
+
+(allow file-read-metadata
+       (subpath "/Applications/Skype.app")
+       (subpath "/Users/nikolay/Library/Application Support/Skype")
+       (subpath "/Users/nikolay/Library/Caches/com.plausiblelabs.crashreporter.data/com.skype.skype")
+       (subpath "/Users/nikolay/Library/Caches/com.skype.skype")
+       (subpath "/private")
+
+       (literal "/")
+       (literal "/Applications")
+       (literal "/Library")
+       (literal "/Library/Keychains")
+       (literal "/Users")
+       (literal "/Users/nikolay")
+       (literal "/Users/nikolay/Downloads")
+       (literal "/Users/nikolay/Library")
+       (literal "/Users/nikolay/Library/Address Book Plug-Ins")
+       (literal "/Users/nikolay/Library/Application Support")
+       (literal "/Users/nikolay/Library/Audio")
+       (literal "/Users/nikolay/Library/Audio/Plug-Ins")
+       (literal "/Users/nikolay/Library/Caches")
+       (literal "/Users/nikolay/Library/Keychains")
+       (literal "/Users/nikolay/Library/Preferences")
+       (literal "/Users/nikolay/Library/Saved Application State")
+       (literal "/etc")
+       (literal "/var")
+       (regex "^/private/var/folders/[^/]+/[^/]+/C/mds$")
+       (regex "^/private/var/folders/[^/]+/[^/]+/T/Skype$")
+       (regex #"^/private/var/folders/[^/]+/[^/]+/C/mds/mdsObject\.db$")
+)
+
+(allow file-write*
+       (subpath "/Users/nikolay/Library/Application Support/Skype")
+       (subpath "/Users/nikolay/Library/Saved Application State/com.skype.skype.savedState")
+       (subpath "/Users/nikolay/Library/Caches/com.skype.skype")
+       (subpath "/private/var/folders")
+       (literal "/Users/nikolay/Library/Preferences/com.skype.skype.plist")
+)
+
+(allow file-write-data
+       (subpath "/Users/nikolay/Library/Application Support/Skype")
+       (subpath "/Users/nikolay/Library/Saved Application State/com.skype.skype.savedState")
+       (subpath "/Users/nikolay/Library/Caches/com.skype.skype")
+       (literal "/dev/dtracehelper")
+       (regex #"^/private/var/folders/[^/]+/[^/]+/C/mds/mds\.lock$")
+)
+
+(allow iokit-open)
+
+(allow ipc-posix-shm-read-data)
+
+(allow ipc-posix-shm-read-metadata)
+
+(allow ipc-posix-shm-write-data)
+
+(allow mach-lookup)
+
+(allow mach-register
+       (global-name "SkypeAPIController")
+       (global-name "com.skype.skype.ServiceProvider")
+       (local-name "com.apple.CFPasteboardClient")
+       (local-name "com.apple.axserver")
+       (local-name "com.apple.coredrag")
+       (local-name "com.apple.tsm.portname")
+)
+
+(allow network-inbound (local ip))
+
+(allow network-outbound)
+
+(allow process-exec*
+       (literal "/Applications/Skype.app/Contents/MacOS/Skype.bin")
+)
+
+(allow sysctl-read)
+(allow system-socket)
