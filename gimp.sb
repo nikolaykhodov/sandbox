@@ -1,0 +1,53 @@
+(version 1)
+
+(deny default)
+
+(allow file-ioctl
+       (literal "/dev/dtracehelper"))
+
+(allow file-read*
+       (regex #"^/")
+)
+
+(allow file-write*
+       (regex "^/Users/[a-z0-9+]")
+)
+
+(allow file-write-data
+       (regex "^/Users/[a-z0-9+]")
+       (literal "/dev/dtracehelper")
+       (literal "/dev/null")
+       (literal "/dev/tty")
+)
+
+(allow iokit-open)
+
+(allow ipc-posix-shm-read-data)
+
+(allow ipc-posix-shm-read-metadata)
+
+(allow ipc-posix-shm-write-create)
+
+(allow ipc-posix-shm-write-data)
+
+(allow ipc-posix-shm-write-unlink)
+
+(allow mach-lookup)
+
+(allow mach-register)
+
+(allow network-outbound
+       (literal "/private/var/run/mDNSResponder")
+)
+
+(allow process-exec*
+       (subpath "/Applications/GIMP.app/Contents")
+       (literal "/bin/expr")
+       (literal "/bin/sh")
+       (literal "/usr/bin/basename")
+       (literal "/usr/bin/dirname")
+)
+
+(allow process-fork)
+
+(allow sysctl-read)
