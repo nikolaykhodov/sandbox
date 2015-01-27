@@ -41,8 +41,6 @@ class Tokenizer {
         // strip comments
         this._entries = this._entries.filter((entry) => entry.line.slice(0,1) !== ';');
 
-        console.log(this._entries);
-
         this._tokens = [];
     }
 
@@ -129,12 +127,13 @@ class Parser {
 
 class VM {
 
-    rules: Array<Rule>;
-    version: number;
-    ast: AST;
+    private _rules: Array<Rule>;
+    private _version: number;
+    private _ast: AST;
 
     constructor(ast: AST) {
-        this.ast = ast;
+        this._ast = ast;
+        this._rules = [];
     }
 
     setVersion(v: string): void {
@@ -144,20 +143,58 @@ class VM {
             throw new Error("Version '" + v + "' is not a number");
         }
 
-        this.version = version;
+        this._version = version;
     }
 
-    addRule(action: Action, operation: string, ...options: any[]): void {
-        //var rule: Rule = new Rule();
+    checkOptions(rawOptions: Array<any>): Array<Option> {
+        var options: Array<Option> = [];
 
-        //rule.action = action;
+        rawOptions.forEach((rawOption: Array<string>) => {
+            var definition: string = rawOption[0];
+            var value: string = rawOption[1];
+            var checkRegexes: { [index: string]: RegExp; } = {
+                literal: /^['"].*['"]$/,
+                subpath: /^['"]\/.*['"]$/,
+                regex: /^#['"]\/.*['"]$/
+            };
+
+            if(definition in checkRegexes) {
+                var regex: RegExp = checkRegexes[definition];
+                if(typeof(value) !== 'string' || regex.test(value) === null) {
+                    throw new Error(definition + " value of '" + value + "' is not " + definition);
+                }
+            }
+
+            options.push({
+                definition: rawOption[0],
+                value: rawOption[1]
+            });
+        });
+
+        return options;
+    }
+
+    getRules(): Array<Rule> {
+        return this._rules;
+    }
+
+    addRule(action: Action, operation: string, rawOptions: Array<string>): void {
+        var rule: Rule = {
+            action: action,
+            operation: operation,
+            options: this.checkOptions(rawOptions)
+        };
+
+        this._rules.push(rule);
     }
 
     run(): void {
-        this.ast.forEach((statement: Array<string>) => {
+        this._ast.forEach((statement: Array<string>) => {
             var action: string = statement[0];
             var operation: string = statement[1];
             var options: Array<string> = statement.slice(2);
+
+            console.log(options);
 
             switch(action) {
                 case 'version':
@@ -182,9 +219,7 @@ var tokenizer = new Tokenizer('(' + content + ')');
 var parser = new Parser(tokenizer);
 var ast: AST = parser.parse();
 
-console.log(ast);
-
 var vm = new VM(ast)
 vm.run();
 
-console.log(vm.rules);
+console.log(JSON.stringify(vm.getRules(), null, 4));
