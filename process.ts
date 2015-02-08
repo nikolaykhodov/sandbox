@@ -45,7 +45,57 @@ class Tokenizer {
     }
 
     _splitIntoTokens(line: string) {
-        return line.replace(/\(/g, (s) => ' ( ').replace(/\)/g, (s) => ' ) ').split(' ').filter((token) => token !== '');
+        var tokens: Array<string> = [];
+        var token: string = '';
+        var _line: string = line + ' ';
+
+        var index: number = -1;
+        var isSeparator: RegExp = /^\s$/;
+        var stringStartsWith: string = '';
+        
+        while(++index < line.length) {
+            var currentSymbol = _line[index];
+            var nextSymbol = _line[index + 1];
+
+            if(stringStartsWith) {
+                if(currentSymbol === '\\' && nextSymbol === stringStartsWith) {
+                    token = token + '\\' + stringStartsWith;
+                } else if(currentSymbol === stringStartsWith) {
+                    tokens.push(token + currentSymbol);
+                    stringStartsWith = '';
+                    token = '';
+                } else {
+                    token = token + currentSymbol;
+                }               
+            } else {
+                if(token === '') {
+                    if(isSeparator.test(currentSymbol)) {
+                        continue;
+                    } else if (currentSymbol === '"' || currentSymbol === "'") {
+                        stringStartsWith = currentSymbol;
+                        token = currentSymbol;
+                    } else if (currentSymbol === '(' || currentSymbol === ')') {
+                        tokens.push(currentSymbol);
+                        token = '';
+                    } else {
+                        token = currentSymbol;
+                    }
+                } else {
+                    if(isSeparator.test(currentSymbol)) {
+                        tokens.push(token);
+                        token = '';
+                    } else if (currentSymbol === '(' || currentSymbol === ')') {
+                        tokens.push(token);
+                        tokens.push(currentSymbol);
+                        token = '';
+                    } else {
+                        token = token + currentSymbol;
+                    }
+                }
+            }
+        }
+
+        return tokens;
     }
 
     _updateTokens() {
@@ -54,8 +104,9 @@ class Tokenizer {
             if(!entry) {
                 throw new Error('Unexpected EOF');
             }
-            this._tokens = this._splitIntoTokens(entry.line);
+
             this._currentLine = entry.lineNumber;
+            this._tokens = this._splitIntoTokens(entry.line);
         }
     }
 
@@ -193,8 +244,6 @@ class VM {
             var action: string = statement[0];
             var operation: string = statement[1];
             var options: Array<string> = statement.slice(2);
-
-            console.log(options);
 
             switch(action) {
                 case 'version':
