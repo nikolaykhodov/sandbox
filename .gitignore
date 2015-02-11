@@ -1,0 +1,5 @@
+node_modules/
+dist/
+src/*.js
+tmp/
+.DS_Store

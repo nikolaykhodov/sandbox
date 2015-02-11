@@ -1,0 +1,11 @@
+(version 1)
+
+(deny default arg1 arg2)
+
+(allow file-ioctl
+       (literal "/dev/dtracehelper"))
+
+(allow file-issue-extension
+       (literal "/Users/nikolay/Library/Caches/com.evernote.Evernote"))
+
+(allow system-socket)

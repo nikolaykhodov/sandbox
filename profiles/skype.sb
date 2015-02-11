@@ -138,10 +138,9 @@
 (allow network-outbound)
 
 (allow process-exec*
-       (literal "/Applications/Skype.app/Contents/MacOS/Skype.bin")
+       (literal "/Applications/Skype.app/Contents/MacOS/Skype")
 )
 
 (allow sysctl-read)
 (allow system-socket)
 
-(debug deny)

@@ -1,0 +1,24 @@
+{
+  "name": "sandbox-profiles",
+  "version": "1.0.0",
+  "description": "",
+  "main": "process.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nikolaykhodov/sandbox.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nikolaykhodov/sandbox/issues"
+  },
+  "homepage": "https://github.com/nikolaykhodov/sandbox",
+  "dependencies": {
+    "chai": "^1.10.0",
+    "mocha": "^2.1.0",
+    "typescript-require": "^0.2.8"
+  }
+}
