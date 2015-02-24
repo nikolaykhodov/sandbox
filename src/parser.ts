@@ -31,13 +31,13 @@ export class Lexer {
     _splitIntoTokens(line: string) {
         var tokens: Array<string> = [];
         var token: string = '';
-        var _line: string = line + ' ';
+        var _line: string = line + '     ';
 
         var index: number = -1;
         var isSeparator: RegExp = /^\s$/;
         var stringStartsWith: string = '';
         
-        while(++index < line.length) {
+        while(++index < _line.length) {
             var currentSymbol = _line[index];
             var nextSymbol = _line[index + 1];
 
@@ -78,6 +78,7 @@ export class Lexer {
                 }
             }
         }
+
 
         return tokens;
     }

@@ -15,8 +15,8 @@ describe('Parser', () => {
 		done();
 	});
 
-	it('should extract all elements from a simple list from a string with a line breaker', (done) => {
-		var lexer = new parser.Lexer('(action arg1\n arg2 \narg3 arg4\n arg5 arg6)');
+	it('should extract all elements from a simple list from a string with line breakers', (done) => {
+		var lexer = new parser.Lexer('(action arg1\n arg2 \t\narg3 arg4\n arg5 arg6)');
 		var syntax = new parser.Parser(lexer);
 		var ast = syntax.parse();
 
