@@ -3,6 +3,7 @@ import parser = require('./parser');
 export interface Option {
     definition: string;
     value: string;
+    raw: Array<string>;
 }
 
 export interface Rule {
@@ -60,7 +61,8 @@ export class VM {
 
             options.push({
                 definition: rawOption[0],
-                value: rawOption[1]
+                value: rawOption[1],
+                raw: rawOption
             });
         });
 

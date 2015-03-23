@@ -36,7 +36,8 @@ function squeezeLiteralPaths(rule: vm.Rule): vm.Rule {
 
         rule.options.push({
             definition: definition,
-            value: dir
+            value: dir,
+            raw: [definition, dir]
         });
     });
 
@@ -61,7 +62,12 @@ function dumpRules(rules: Array<vm.Rule>): void {
         if(rule.options.length > 0) {
             line += '\n';
             rule.options.forEach((option: vm.Option, index: number) => {
-                line += '\t(' + option.definition + ' ' + option.value + ')';
+                if(option.raw.length >= 3) {
+                    line += '\t(' + option.raw.join(' ') + ')';
+                } else {
+                    line += '\t(' + option.definition + ' ' + option.value + ')';
+                }
+
                 // don't add a line breaker if it's the last option
                 line += (index < rule.options.length - 1) ? '\n' : '';
             });
