@@ -1,0 +1,13 @@
+(version 1)
+
+(allow default)
+
+(deny file-write*
+       (regex #"test_if_sandboxed_child$")
+       (regex #"test_if_sandboxed_spawn$")
+)
+
+(allow process-fork)
+(allow process-exec
+       (regex #".*")
+)
